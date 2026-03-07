@@ -10,8 +10,14 @@ $(document).on("submit","#addBusinessForm",function(e){
     
     e.preventDefault();
     
-    let formData = $(this).serialize();
-    formData += "&action=add";
+    let formData = $(this).serialize(); //serialize means to convert form data into a query string format (key=value&key2=value2)
+    let id = $("#business_id").val();
+
+    if(id){
+        formData += "&action=update";
+    }else{
+        formData += "&action=add";
+    }
     console.log("Form Submitted");
     console.log("Form Data:", formData);
 
@@ -28,6 +34,7 @@ $(document).on("submit","#addBusinessForm",function(e){
         if(response.status=="success"){
             alert("Business Added Successfully");
             $("#addBusinessModal").modal("hide");
+            $("#addBusinessForm")[0].reset();
             loadBusinesses();
         }else{
             
@@ -43,10 +50,41 @@ $(document).on("submit","#addBusinessForm",function(e){
     });
 
 });
+
+//handle edit button click
+$(document).on("click",".edit-btn",function(){
+
+    let id = $(this).data("id");
+
+    $.ajax({
+        url:"../app/controllers/BusinessController.php",
+        method:"GET",
+        data:{
+            action:"get",
+            id:id
+        },
+        dataType:"json",
+
+        success:function(data){
+
+            $("#name").val(data.name);
+            $("#address").val(data.address);
+            $("#phone").val(data.phone);
+            $("#email").val(data.email);
+
+            $("#business_id").val(data.id);
+
+            $("#addBusinessModal").modal("show");
+        }
+    });
+
+});
+
 function loadBusinesses(){
     $.ajax({
         url : "../app/controllers/BusinessController.php",
         method : "GET",
+        data:{ action:"list" },
         dataType :"json",
 
         success : function(response){

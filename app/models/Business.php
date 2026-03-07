@@ -34,4 +34,23 @@ class Business {
 
         return $stmt->execute();
     }
+    // get business by id method
+    public function getBusinessById($id){
+
+    $query = "SELECT * FROM businesses WHERE id=$id";
+
+    return $this->conn->query($query);
+}
+// update business method
+public function updateBusiness($id,$name,$address,$phone,$email){
+
+    $query = "UPDATE businesses 
+              SET name='$name',
+                  address='$address',
+                  phone='$phone',
+                  email='$email'
+              WHERE id=$id";
+
+    return $this->conn->query($query);
+}
 }

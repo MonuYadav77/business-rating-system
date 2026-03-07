@@ -41,13 +41,53 @@ class BusinessController{
             echo json_encode(["status"=>"error"]);
         }
     }
+    // get business by id method
+    public function getBusiness(){
+
+    $id = $_GET['id'];
+
+    $result = $this->business->getBusinessById($id);
+
+    echo json_encode($result->fetch_assoc());
+
+    
+    }
+    // update business method
+    public function updateBusiness(){
+
+    $id = $_POST['business_id'];
+
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+
+    if($this->business->updateBusiness($id,$name,$address,$phone,$email)){
+        echo json_encode(["status"=>"success"]);
+    }else{
+        echo json_encode(["status"=>"error"]);
+    }
+}
+
 }
 // 
 $controller = new BusinessController();
-$action = $_POST['action'] ?? 'list';
+$action = $_REQUEST['action'] ?? 'list';
 
-if($action == "add"){
-    $controller->addBusiness();
-}else{
-    $controller->index();
+switch($action){
+
+    case "add":
+        $controller->addBusiness();
+        break;
+
+    case "update":
+        $controller->updateBusiness();
+        break;
+
+    case "get":
+        $controller->getBusiness();
+        break;
+
+    default:
+        $controller->index();
 }
