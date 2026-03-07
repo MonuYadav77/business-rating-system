@@ -53,4 +53,15 @@ public function updateBusiness($id,$name,$address,$phone,$email){
 
     return $this->conn->query($query);
 }
+//delte business method
+public function deleteBusiness($id){
+
+    $query = "DELETE FROM businesses WHERE id=?";
+
+    $stmt = $this->conn->prepare($query);
+
+    $stmt->bind_param("i",$id);
+
+    return $stmt->execute();
+}
 }

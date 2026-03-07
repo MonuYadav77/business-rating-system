@@ -68,6 +68,17 @@ class BusinessController{
         echo json_encode(["status"=>"error"]);
     }
 }
+// delete business method
+public function deleteBusiness(){
+
+    $id = $_POST['id'];
+
+    if($this->business->deleteBusiness($id)){
+        echo json_encode(["status"=>"success"]);
+    }else{
+        echo json_encode(["status"=>"error"]);
+    }
+}
 
 }
 // 
@@ -87,6 +98,9 @@ switch($action){
     case "get":
         $controller->getBusiness();
         break;
+    case "delete":
+    $controller->deleteBusiness();
+    break;
 
     default:
         $controller->index();

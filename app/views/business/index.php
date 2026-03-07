@@ -69,3 +69,49 @@
         </div>
     </div>
 </div>
+
+<!-- Rating Modal -->
+
+<div class="modal fade" id="ratingModal">
+
+<div class="modal-dialog">
+<div class="modal-content">
+
+<div class="modal-header">
+<h5 class="modal-title">Rate Business</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+
+<input type="hidden" id="ratingBusinessId">
+
+<div class="mb-3">
+<label class="form-label">Name</label>
+<input type="text" id="ratingName" class="form-control" placeholder="Enter your name">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Email</label>
+<input type="email" id="ratingEmail" class="form-control" placeholder="Enter your email">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Phone</label>
+<input type="text" id="ratingPhone" class="form-control" placeholder="Enter your phone number">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Your Rating</label>
+<div id="userRating"></div>
+</div>
+
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-primary" id="submitRatingBtn">Submit Rating</button>
+</div>
+
+</div>
+</div>
+</div>
