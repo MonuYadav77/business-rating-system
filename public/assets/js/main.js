@@ -1,10 +1,48 @@
 
-$(document).ready(function(){
-    console.log("App Loaded Successfully");
-    loadBusinesses();
 
+document.getElementById("addBusinessBtn").addEventListener("click", function () {
+    const modal = new bootstrap.Modal(document.getElementById("addBusinessModal"));
+    modal.show();
 });
 
+// Handle form submission for adding a new business
+$(document).on("submit","#addBusinessForm",function(e){
+    
+    e.preventDefault();
+    
+    let formData = $(this).serialize();
+    formData += "&action=add";
+    console.log("Form Submitted");
+    console.log("Form Data:", formData);
+
+    $.ajax({
+
+        url:"../app/controllers/BusinessController.php",
+        method:"POST",
+        data:formData,
+        dataType:"json",
+
+        success:function(response){
+        console.log("Response from server:", response);
+
+        if(response.status=="success"){
+            alert("Business Added Successfully");
+            $("#addBusinessModal").modal("hide");
+            loadBusinesses();
+        }else{
+            
+            alert("Error Adding Business");
+        }
+    },
+
+    error:function(xhr,status,error){
+        console.log("AJAX Error:", error);
+        console.log(xhr.responseText);
+    }
+
+    });
+
+});
 function loadBusinesses(){
     $.ajax({
         url : "../app/controllers/BusinessController.php",
@@ -37,3 +75,9 @@ function loadBusinesses(){
         }
     })
 }
+
+$(document).ready(function(){
+    console.log("App Loaded Successfully");
+    loadBusinesses();
+
+});

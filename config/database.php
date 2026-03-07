@@ -1,17 +1,27 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "business_rating"; 
+class Database {
 
-$conn = new mysqli($servername, $username, $password, $database);
+    private $host = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "business_rating";
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    public $conn;
+
+    public function connect(){
+
+        $this->conn = new mysqli(
+            $this->host,
+            $this->username,
+            $this->password,
+            $this->dbname
+        );
+
+        if($this->conn->connect_error){
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+
+        return $this->conn;
+    }
 }
-
-echo "Database connected successfully";
-
-$conn->close();

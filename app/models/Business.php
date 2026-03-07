@@ -16,11 +16,22 @@ class Business {
         FROM businesses b
         LEFT JOIN ratings r ON b.id = r.business_id
         GROUP BY b.id
-        ORDER BY b.id DESC
+        ORDER BY b.id ASC
         ";
 
         $result = $this->conn->query($query);
 
         return $result;
+    }
+    // add business method
+     public function addBusiness($name,$address,$phone,$email){
+
+        $query = "INSERT INTO businesses (name,address,phone,email)
+                  VALUES (?,?,?,?)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ssss",$name,$address,$phone,$email);
+
+        return $stmt->execute();
     }
 }
